@@ -1,4 +1,8 @@
 ---
+
+import { Image } from 'astro:assets';
+import logoImage from '../assets/logo-macris.avif';
+
 const navItems = [
   { name: 'Inicio', url: '/' },
   { name: 'Nosotros', url: '/nosotros' },
@@ -14,9 +18,14 @@ const navItems = [
     
     <div class="flex justify-center py-6">
       <a href="/" class="flex flex-col items-center group">
-        <span class="text-4xl font-black text-slate-400 tracking-tighter leading-none group-hover:scale-105 transition-transform uppercase">
-          Hielo<span class="text-brand">pro</span>
-        </span>
+        <Image 
+          src={logoImage} 
+          alt="Logo de Hielo Pro" 
+          width={260}
+          height={100} 
+          loading="eager"
+          class="h-auto w-48 md:w-64 object-contain group-hover:scale-105 transition-transform duration-300"
+        />
         <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-slate-500 mt-1">
           Pureza y Resistencia
         </span>
@@ -33,7 +42,7 @@ const navItems = [
         </a>
       ))}
       
-      <div class="h-6 w-[1px] bg-slate-200 mx-2"></div>
+      <div class="h-6 w-px bg-slate-200 mx-2"></div>
       
       <a 
         href="/pagos" 
