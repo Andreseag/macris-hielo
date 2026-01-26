@@ -1,0 +1,104 @@
+---
+// No necesitamos props por ahora, todo es interactividad del lado del cliente
+---
+
+<section id="calculadora" class="py-24 bg-white">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-slate-900 rounded-[3rem] p-8 md:p-16 shadow-2xl relative overflow-hidden">
+      <div class="absolute -top-24 -right-24 w-64 h-64 bg-brand/20 rounded-full blur-3xl"></div>
+      
+      <div class="relative z-10">
+        <h2 class="text-brand font-bold uppercase tracking-widest text-sm mb-4 text-center">Herramienta Pro</h2>
+        <h3 class="text-4xl md:text-5xl font-black text-white text-center mb-12">
+          Calcula tu <span class="text-blue-400">Pedido</span>
+        </h3>
+
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="space-y-8">
+            <div>
+              <label class="block text-blue-200 text-sm font-bold mb-3 uppercase tracking-tighter">¿Cuántas personas?</label>
+              <input 
+                type="number" 
+                id="num-personas" 
+                placeholder="Ej. 50" 
+                class="w-full bg-slate-800 border-2 border-slate-700 rounded-2xl p-4 text-white focus:border-brand outline-none transition-all font-bold text-xl"
+              />
+            </div>
+
+            <div>
+              <label class="block text-blue-200 text-sm font-bold mb-3 uppercase tracking-tighter">¿Cuántas horas?</label>
+              <input 
+                type="number" 
+                id="num-horas" 
+                placeholder="Ej. 5" 
+                class="w-full bg-slate-800 border-2 border-slate-700 rounded-2xl p-4 text-white focus:border-brand outline-none transition-all font-bold text-xl"
+              />
+            </div>
+
+            <div>
+              <label class="block text-blue-200 text-sm font-bold mb-3 uppercase tracking-tighter">Clima del evento</label>
+              <select id="clima" class="w-full bg-slate-800 border-2 border-slate-700 rounded-2xl p-4 text-white focus:border-brand outline-none transition-all font-bold">
+                <option value="1.5">Cálido (30°C+)</option>
+                <option value="1.0" selected>Templado (20°C - 25°C)</option>
+                <option value="0.7">Frío (Menos de 15°C)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="bg-brand rounded-3xl p-8 text-center flex flex-col items-center justify-center border-2 border-blue-400/30">
+            <span class="text-blue-100 font-bold uppercase tracking-widest text-xs mb-2">Total Sugerido</span>
+            <div class="flex items-baseline gap-2">
+              <span id="resultado-kilos" class="text-7xl font-black text-white">0</span>
+              <span class="text-3xl font-bold text-blue-200">Kg</span>
+            </div>
+            <p class="text-blue-100 text-sm mt-4 italic leading-tight">
+              *Basado en consumo estándar para bebidas y enfriamiento.
+            </p>
+            
+            <button 
+              id="btn-pedir-calc"
+              class="mt-8 w-full bg-white text-brand font-black py-4 rounded-2xl hover:bg-blue-50 transition-all shadow-xl active:scale-95"
+            >
+              HACER ESTE PEDIDO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const personasInput = document.getElementById('num-personas') as HTMLInputElement;
+  const horasInput = document.getElementById('num-horas') as HTMLInputElement;
+  const climaSelect = document.getElementById('clima') as HTMLSelectElement;
+  const resultadoText = document.getElementById('resultado-kilos');
+
+  function calcular() {
+    const p = parseFloat(personasInput.value) || 0;
+    const h = parseFloat(horasInput.value) || 0;
+    const c = parseFloat(climaSelect.value);
+
+    // Algoritmo: Personas * Horas * 0.25kg * Factor Clima
+    let total = p * h * 0.25 * c;
+    
+    // Redondear al entero más cercano (no queremos vender medios kilos)
+    const finalResult = Math.ceil(total);
+    
+    if (resultadoText) {
+      resultadoText.innerText = finalResult.toString();
+    }
+  }
+
+  // Escuchar cambios
+  [personasInput, horasInput, climaSelect].forEach(el => {
+    el?.addEventListener('input', calcular);
+  });
+
+  // Botón para llevar al contacto con el dato
+  document.getElementById('btn-pedir-calc')?.addEventListener('click', () => {
+    const kilos = resultadoText?.innerText;
+    window.location.href = `#contacto`;
+    // Opcional: Podrías pre-llenar un mensaje de WhatsApp aquí
+  });
+</script>
