@@ -5,4 +5,7 @@ export default defineConfig({
   // Astro verá el archivo postcss.config.mjs automáticamente.
   site: "https://andreseag.github.io",
   base: "/macris-hielo",
+  typescript: {
+    checkJs: false,
+  },
 });
