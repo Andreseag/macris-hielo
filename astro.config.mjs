@@ -1,5 +1,6 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  // ¡No pongas nada de tailwind aquí por ahora!
+  // Astro verá el archivo postcss.config.mjs automáticamente.
+});

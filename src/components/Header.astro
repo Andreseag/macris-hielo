@@ -1,0 +1,53 @@
+---
+const navItems = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Nosotros', url: '/nosotros' },
+  { name: 'Productos', url: '/productos' },
+  { name: 'Puntos de venta', url: '/puntos-de-venta' },
+  { name: 'Hielo + Concreto', url: '/hielo-concreto' },
+  { name: 'Contacto', url: '/contacto' },
+];
+---
+
+<header class="w-full bg-white border-b border-brand/10 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="flex justify-center py-6">
+      <a href="/" class="flex flex-col items-center group">
+        <span class="text-4xl font-black text-slate-400 tracking-tighter leading-none group-hover:scale-105 transition-transform uppercase">
+          Hielo<span class="text-brand">pro</span>
+        </span>
+        <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-slate-500 mt-1">
+          Pureza y Resistencia
+        </span>
+      </a>
+    </div>
+
+    <nav class="hidden md:flex flex-wrap justify-center items-center pb-4 space-x-8">
+      {navItems.map(item => (
+        <a 
+          href={item.url} 
+          class="text-sm font-bold text-slate-600 hover:text-brand transition-colors uppercase tracking-wide"
+        >
+          {item.name}
+        </a>
+      ))}
+      
+      <div class="h-6 w-[1px] bg-slate-200 mx-2"></div>
+      
+      <a 
+        href="/pagos" 
+        class="inline-flex items-center px-6 py-2 border border-transparent text-xs font-black rounded-full text-white bg-brand hover:bg-brand-dark shadow-md hover:shadow-brand/20 transition-all active:scale-95"
+      >
+        PAGOS EN LÍNEA
+      </a>
+    </nav>
+
+    <div class="md:hidden flex justify-center pb-4">
+        <button class="text-xs font-bold text-brand border border-brand/30 px-6 py-1.5 rounded-full hover:bg-brand/5 transition-colors">
+            MENÚ
+        </button>
+    </div>
+
+  </div>
+</header>
