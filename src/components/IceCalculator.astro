@@ -1,5 +1,5 @@
 ---
-// No necesitamos props por ahora, todo es interactividad del lado del cliente
+// La lógica de estilos se mantiene igual
 ---
 
 <section id="calculadora" class="py-24 bg-white">
@@ -17,22 +17,12 @@
           <div class="space-y-8">
             <div>
               <label class="block text-blue-200 text-sm font-bold mb-3 uppercase tracking-tighter">¿Cuántas personas?</label>
-              <input 
-                type="number" 
-                id="num-personas" 
-                placeholder="Ej. 50" 
-                class="w-full bg-slate-800 border-2 border-slate-700 rounded-2xl p-4 text-white focus:border-brand outline-none transition-all font-bold text-xl"
-              />
+              <input type="number" id="num-personas" placeholder="Ej. 50" class="w-full bg-slate-800 border-2 border-slate-700 rounded-2xl p-4 text-white focus:border-brand outline-none transition-all font-bold text-xl"/>
             </div>
 
             <div>
               <label class="block text-blue-200 text-sm font-bold mb-3 uppercase tracking-tighter">¿Cuántas horas?</label>
-              <input 
-                type="number" 
-                id="num-horas" 
-                placeholder="Ej. 5" 
-                class="w-full bg-slate-800 border-2 border-slate-700 rounded-2xl p-4 text-white focus:border-brand outline-none transition-all font-bold text-xl"
-              />
+              <input type="number" id="num-horas" placeholder="Ej. 5" class="w-full bg-slate-800 border-2 border-slate-700 rounded-2xl p-4 text-white focus:border-brand outline-none transition-all font-bold text-xl"/>
             </div>
 
             <div>
@@ -57,7 +47,7 @@
             
             <button 
               id="btn-pedir-calc"
-              class="mt-8 w-full bg-white text-brand font-black py-4 rounded-2xl hover:bg-blue-50 transition-all shadow-xl active:scale-95"
+              class="mt-8 w-full cursor-pointer bg-white text-brand font-black py-4 rounded-2xl hover:bg-blue-50 transition-all shadow-xl active:scale-95"
             >
               HACER ESTE PEDIDO
             </button>
@@ -69,36 +59,93 @@
 </section>
 
 <script>
-  const personasInput = document.getElementById('num-personas') as HTMLInputElement;
-  const horasInput = document.getElementById('num-horas') as HTMLInputElement;
-  const climaSelect = document.getElementById('clima') as HTMLSelectElement;
-  const resultadoText = document.getElementById('resultado-kilos');
+  const personasInput = document.getElementById('num-personas') as HTMLInputElement | null;
+  const horasInput = document.getElementById('num-horas') as HTMLInputElement | null;
+  const climaSelect = document.getElementById('clima') as HTMLSelectElement | null;
+  const resultadoText = document.getElementById('resultado-kilos') as HTMLElement | null;
+  const btnPedir = document.getElementById('btn-pedir-calc') as HTMLButtonElement | null;
+  const cardPrincipal = document.querySelector('#calculadora .bg-slate-900') as HTMLElement | null;
 
-  function calcular() {
+  function calcular(): void {
+    if (!personasInput || !horasInput || !climaSelect || !resultadoText) return;
+
+    // Quitamos clases de error si el usuario empieza a escribir
+    personasInput.classList.remove('border-red-500', 'animate-shake');
+    horasInput.classList.remove('border-red-500', 'animate-shake');
+
     const p = parseFloat(personasInput.value) || 0;
     const h = parseFloat(horasInput.value) || 0;
-    const c = parseFloat(climaSelect.value);
+    const c = parseFloat(climaSelect.value) || 1.0;
 
-    // Algoritmo: Personas * Horas * 0.25kg * Factor Clima
-    let total = p * h * 0.25 * c;
-    
-    // Redondear al entero más cercano (no queremos vender medios kilos)
+    const total = p * h * 0.25 * c;
     const finalResult = Math.ceil(total);
     
-    if (resultadoText) {
-      resultadoText.innerText = finalResult.toString();
-    }
+    resultadoText.innerText = finalResult.toString();
   }
 
-  // Escuchar cambios
   [personasInput, horasInput, climaSelect].forEach(el => {
     el?.addEventListener('input', calcular);
   });
 
-  // Botón para llevar al contacto con el dato
-  document.getElementById('btn-pedir-calc')?.addEventListener('click', () => {
-    const kilos = resultadoText?.innerText;
-    window.location.href = `#contacto`;
-    // Opcional: Podrías pre-llenar un mensaje de WhatsApp aquí
+  btnPedir?.addEventListener('click', () => {
+    if (!personasInput || !horasInput || !climaSelect || !resultadoText) return;
+
+    const kilos = parseInt(resultadoText.innerText || "0");
+
+    // VALIDACIÓN MODERNA
+    if (kilos <= 0) {
+      // 1. Efecto visual en inputs
+      [personasInput, horasInput].forEach(input => {
+        input.classList.add('border-red-500');
+      });
+
+      // 2. Efecto de vibración en la card (vía Tailwind o CSS nativo)
+      cardPrincipal?.classList.add('animate-bounce-short'); // Suponiendo una clase de bounce pequeño
+      
+      // 3. Feedback en el botón
+      const originalText = btnPedir.innerText;
+      btnPedir.innerText = "¡FALTA INFORMACIÓN! 🧊";
+      btnPedir.classList.replace('bg-white', 'bg-red-500');
+      btnPedir.classList.replace('text-brand', 'text-white');
+      btnPedir.classList.remove('hover:bg-blue-50')
+
+      setTimeout(() => {
+        btnPedir.innerText = originalText;
+        btnPedir.classList.replace('bg-red-500', 'bg-white');
+        btnPedir.classList.replace('text-white', 'text-brand');
+        cardPrincipal?.classList.remove('animate-bounce-short');
+        btnPedir.classList.add("hover:bg-blue-50");
+      }, 2000);
+
+      return;
+    }
+
+    // Si todo está bien, procedemos con WhatsApp...
+    const personas = personasInput.value;
+    const horas = horasInput.value;
+    const climaText = climaSelect.options[climaSelect.selectedIndex]?.text;
+    const tel = "573155427324";
+    
+    const mensaje = `¡Hola Macris! 🧊 He usado la calculadora de su web y necesito un pedido:\n\n` +
+                    `- Cantidad estimada: *${kilos} Kg*\n` +
+                    `- Para: ${personas} personas\n` +
+                    `- Duración: ${horas} horas\n` +
+                    `- Clima: ${climaText}\n\n` +
+                    `¿Me podrían confirmar disponibilidad y precio?`;
+
+    window.open(`https://wa.me/${tel}?text=${encodeURIComponent(mensaje)}`, '_blank');
   });
 </script>
+
+<style>
+  /* Un pequeño efecto de sacudida para cuando hay error */
+  .animate-bounce-short {
+    animation: bounceShort 0.3s ease-in-out;
+  }
+
+  @keyframes bounceShort {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+</style>

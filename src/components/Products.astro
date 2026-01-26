@@ -1,18 +1,24 @@
 ---
+const phone = "573155427324";
+
 const products = [
   {
     name: "Hielo en Bloque 10kg",
     description: "Bloque sólido de alta densidad. Ideal para eventos medianos, refrigeración comercial y conservación prolongada.",
     specs: "Bolsa de 10kg",
-    href: "#contacto"
   },
   {
     name: "Hielo en Bloque 20kg",
     description: "Máxima duración y resistencia térmica. Perfecto para el sector industrial, transporte de alimentos y grandes eventos.",
     specs: "Bolsa de 20kg",
-    href: "#contacto"
   }
 ];
+
+// Función para generar el link de WhatsApp
+const getWhatsAppLink = (productName: string) => {
+  const message = `¡Hola Hielo Pro! 🧊 Estoy interesado en pedir el *${productName}*.\n\n¿Me podrían dar información sobre precios y entrega en mi ubicación?`;
+  return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+};
 ---
 
 <section id="productos" class="py-24 bg-slate-50">
@@ -26,8 +32,7 @@ const products = [
       </h3>
       <p class="text-xl text-slate-600 leading-relaxed border-l-4 border-brand/20 pl-6">
         No fabricamos solo hielo; entregamos <strong>resistencia térmica</strong>. 
-        Nuestros bloques son el resultado de un proceso de congelación lenta y agua ultra-purificada, 
-        garantizando que el frío dure mucho más tiempo donde más lo necesitas.
+        Nuestros bloques son el resultado de un proceso de congelación lenta y agua ultra-purificada.
       </p>
     </div>
 
@@ -50,15 +55,17 @@ const products = [
             </p>
           </div>
 
-          <div class="mt-auto flex items-center justify-between pt-6 border-t border-slate-100">
-            <div>
+          <div class="mt-auto flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-slate-100 gap-6">
+            <div class="text-center sm:text-left">
               <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">Carga Neta</span>
               <span class="text-brand font-black text-2xl tracking-tighter">{product.specs}</span>
             </div>
             
             <a 
-              href={product.href} 
-              class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-brand text-white font-bold text-sm hover:bg-brand-dark transition-all shadow-lg shadow-brand/20 active:scale-95"
+              href={getWhatsAppLink(product.name)}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-brand text-white font-bold text-sm hover:bg-brand-dark transition-all shadow-lg shadow-brand/20 active:scale-95 w-full sm:w-auto justify-center"
             >
               Pedir Ahora
               <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

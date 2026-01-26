@@ -1,36 +1,21 @@
 ---
 import { Image } from 'astro:assets';
-// Nota: Importa tus imágenes aquí cuando las tengas en src/assets/
-// import banner1 from '../assets/banner-hielo-concreto.jpg';
 ---
 
 <section class="splide w-full group" aria-label="Promociones Hielo Pro">
   <div class="splide__track">
     <ul class="splide__list">
-      
       <li class="splide__slide">
         <div class="relative h-112.5 md:h-150 w-full flex items-center bg-brand overflow-hidden">
           <div class="absolute inset-0 bg-linear-to-r from-brand/90 to-transparent z-10"></div>
-          
           <div class="absolute inset-0 bg-slate-900">
-             <div class="absolute inset-0 opacity-50 bg-[url('https://images.unsplash.com/photo-1541888946425-d81bb19480c5?q=80&w=2070')] bg-cover bg-center"></div>
+              <div class="absolute inset-0 opacity-50 bg-[url('https://images.unsplash.com/photo-1541888946425-d81bb19480c5?q=80&w=2070')] bg-cover bg-center"></div>
           </div>
-
           <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-            <span class="inline-block px-3 py-1 rounded-md bg-white/10 backdrop-blur-sm border border-white/20 text-xs font-bold uppercase tracking-widest mb-4">
-              Sector Construcción
-            </span>
-            <h2 class="text-4xl md:text-7xl font-black mb-4 leading-tight">
-              Hielo + <span class="text-blue-300">Concreto</span>
-            </h2>
-            <p class="text-lg md:text-xl mb-8 max-w-xl text-slate-200">
-              Controlamos la temperatura de sus mezclas con hielo de alta densidad. Entrega programada en obra.
-            </p>
-            <div class="flex gap-4">
-              <a href="/hielo-concreto" class="px-8 py-3 bg-white text-brand font-bold rounded-full hover:scale-105 transition-transform">
-                Cotizar Obra
-              </a>
-            </div>
+            <span class="inline-block px-3 py-1 rounded-md bg-white/10 backdrop-blur-sm border border-white/20 text-xs font-bold uppercase tracking-widest mb-4">Sector Construcción</span>
+            <h2 class="text-4xl md:text-7xl font-black mb-4 leading-tight">Hielo + <span class="text-blue-300">Concreto</span></h2>
+            <p class="text-lg md:text-xl mb-8 max-w-xl text-slate-200">Controlamos la temperatura de sus mezclas con hielo de alta densidad. Entrega programada en obra.</p>
+            <a href="/hielo-concreto" class="px-8 py-3 bg-white text-brand font-bold rounded-full hover:scale-105 transition-transform inline-block">Cotizar Obra</a>
           </div>
         </div>
       </li>
@@ -39,17 +24,13 @@ import { Image } from 'astro:assets';
         <div class="relative h-112.5 md:h-150 w-full flex items-center bg-blue-600 overflow-hidden">
           <div class="absolute inset-0 bg-linear-to-t from-brand/80 to-transparent z-10"></div>
           <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516139008210-96e45dccd83b?q=80&w=2080')] bg-cover bg-center"></div>
-
           <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
             <h2 class="text-4xl md:text-7xl font-black mb-4 uppercase">¿Sin hielo para el evento?</h2>
-            <p class="text-xl md:text-2xl mb-8 font-medium">Hielo purificado en cubos y frapeado. ¡Llegamos en minutos!</p>
-            <a href="/puntos-de-venta" class="px-10 py-4 bg-brand text-white border-2 border-white/30 font-bold rounded-full shadow-2xl hover:bg-brand-dark transition-all">
-              Ver Puntos de Venta
-            </a>
+            <p class="text-xl md:text-2xl mb-8 font-medium">Hielo purificado en bloques de 10kg y 20kg. ¡Llegamos en minutos!</p>
+            <a href="#calculadora" class="px-10 py-4 bg-brand text-white border-2 border-white/30 font-bold rounded-full shadow-2xl hover:bg-brand-dark transition-all inline-block">¡Haz tu pedido!</a>
           </div>
         </div>
       </li>
-
     </ul>
   </div>
 </section>
@@ -59,45 +40,83 @@ import { Image } from 'astro:assets';
   import '@splidejs/splide/css';
 
   const initSplide = () => {
-    new Splide('.splide', {
-      type: 'loop',
-      autoplay: true,
-      interval: 6000,
-      speed: 1000,
-      arrows: true,
-      pagination: true,
-      pauseOnHover: false,
-    }).mount();
+    const el = document.querySelector('.splide');
+    if (el) {
+      new Splide(el as HTMLElement, {
+        type: 'loop',
+        autoplay: true,
+        interval: 6000,
+        speed: 1000,
+        arrows: true,
+        pagination: true,
+        pauseOnHover: false,
+      }).mount();
+    }
   };
 
-  // Esto asegura que funcione incluso con las transiciones de página de Astro
   document.addEventListener('astro:page-load', initSplide);
-  // Y para la primera carga
   initSplide();
 </script>
 
 <style>
-  /* Personalización con las variables de la v4 */
+  /* Personalización Agresiva de Controles */
   :root {
-    --splide-arrow-size: 3rem;
+    /* Tamaño del botón (el círculo) */
+    --splide-arrow-size: 5rem; 
   }
   
+  /* Ajuste de las Flechas (Anterior/Siguiente) */
+  .splide__arrow {   
+    width: var(--splide-arrow-size) !important;
+    height: var(--splide-arrow-size) !important;
+    background: white !important; 
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    opacity: 0; /* Escondidas por defecto */
+    transform: translateY(-50%) scale(0.8);
+  }
+
+  /* Mostrar flechas al pasar el mouse por el slider */
+  .group:hover .splide__arrow {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+
+  .splide__arrow:hover {
+    background: var(--color-brand, #0066FF) !important;
+    border-color: white !important;
+    transform: translateY(-50%) scale(1.1) !important;
+  }
+
+  /* Hacer el ícono de adentro más grande */
+  .splide__arrow svg {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    fill: white !important;
+    transition: transform 0.3s ease;
+  }
+
+  .splide__arrow--prev { left: 2rem !important; }
+  .splide__arrow--next { right: 2rem !important; }
+
+  /* Paginación (Puntitos) */
+  .splide__pagination {
+    bottom: 2rem !important;
+  }
+
   .splide__pagination__page {
+    width: 12px !important;
+    height: 12px !important;
     background: white !important;
-    opacity: 0.5;
-    transition: all 0.3s ease;
+    opacity: 0.4;
+    margin: 0 6px !important;
   }
 
   .splide__pagination__page.is-active {
-    background: var(--color-brand) !important; /* Usando tu variable de v4 */
+    background: white !important;
     opacity: 1;
-    transform: scale(1.4);
-  }
-
-  .splide__arrow {
-    background: rgba(255, 255, 255, 0.1) !important;
-    backdrop-filter: blur(4px);
-    color: white !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    transform: scale(1.5);
+    box-shadow: 0 0 15px rgba(255,255,255,0.5);
   }
 </style>
