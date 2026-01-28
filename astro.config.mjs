@@ -4,6 +4,6 @@ export default defineConfig({
   // ¡No pongas nada de tailwind aquí por ahora!
   // Astro verá el archivo postcss.config.mjs automáticamente.
   site: "https://andreseag.github.io",
-  base: "/ss-portfolio",
+  base: "/macris-hielo",
   output: "static", // Forzamos a que sea estático
 });
