@@ -1,16 +1,18 @@
 ---
+import { Image } from 'astro:assets';
 const phone = "573155427324";
-
 const products = [
   {
     name: "Hielo en Bloque 10kg",
     description: "Bloque sólido de alta densidad. Ideal para eventos medianos, refrigeración comercial y conservación prolongada.",
     specs: "Bolsa de 10kg",
+    image: '/img/products/image-hielo-2.png'
   },
   {
     name: "Hielo en Bloque 20kg",
     description: "Máxima duración y resistencia térmica. Perfecto para el sector industrial, transporte de alimentos y grandes eventos.",
     specs: "Bolsa de 20kg",
+    image: '/img/products/image-hielo-1.png'
   }
 ];
 
@@ -39,14 +41,15 @@ const getWhatsAppLink = (productName: string) => {
     <div class="grid md:grid-cols-2 gap-10">
       {products.map((product) => (
         <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group">
-          
-          <div class="w-full h-52 bg-blue-50/50 rounded-2xl mb-8 flex items-center justify-center border border-blue-100/50 overflow-hidden relative">
-             <div class="absolute inset-0 bg-gradient-to-tr from-brand/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-             
-             <svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-brand/30 group-hover:scale-110 transition-transform duration-500 z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-             </svg>
-          </div>
+        
+
+          <Image 
+            src={product.image} 
+            alt={`Imagen de ${product.name}`}
+            width={600} 
+            height={400}
+            class="mb-8 rounded-2xl object-cover"
+          />
 
           <div class="mb-8">
             <h4 class="text-3xl font-black text-slate-800 mb-4 tracking-tight">{product.name}</h4>

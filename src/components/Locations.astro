@@ -1,0 +1,91 @@
+---
+const locations = [
+  {
+    city: "Villanueva, Casanare",
+    name: "Sede Principal - Barrio Ortiz",
+    address: "Calle 100 # 95-20",
+    schedule: "Lun - Sáb: 6:00 AM - 8:00 PM",
+    mapLink: "https://maps.google.com/?q=Barrio+Ortiz+Apartado",
+    phone: "315 542 7324"
+  },
+  // {
+  //   city: "Carepa",
+  //   name: "Distribuidora Central",
+  //   address: "Carrera 80 # 70-15",
+  //   schedule: "Lun - Vie: 7:00 AM - 6:00 PM",
+  //   mapLink: "https://maps.google.com/?q=Carepa+Antioquia",
+  //   phone: "315 542 7324"
+  // },
+  // {
+  //   city: "Chigorodó",
+  //   name: "Punto de Venta Autorizado",
+  //   address: "Avenida Principal # 12-45",
+  //   schedule: "24 Horas",
+  //   mapLink: "https://maps.google.com/?q=Chigorodo+Antioquia",
+  //   phone: "315 542 7324"
+  // }
+];
+---
+
+<section id="puntos-venta" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+      <div class="max-w-2xl">
+        <h2 class="text-brand font-bold uppercase tracking-[0.4em] text-xs mb-4">Presencia Regional</h2>
+        <h3 class="text-5xl md:text-6xl font-black text-slate-900 leading-none">
+          Encuéntranos <br/> 
+          <span class="text-brand">Cerca de Ti.</span>
+        </h3>
+      </div>
+      
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      {locations.map((loc) => (
+        <div class="group relative bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:bg-brand transition-all duration-500 overflow-hidden">
+          
+          <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-3xl group-hover:bg-brand-light/20 transition-all"></div>
+
+          <header class="mb-8">
+            <span class="inline-block px-3 py-1 rounded-full bg-brand/10 text-brand text-[10px] font-bold uppercase tracking-widest mb-4 group-hover:bg-white/20 group-hover:text-white transition-colors">
+              {loc.city}
+            </span>
+            <h4 class="text-2xl font-black text-slate-800 group-hover:text-white transition-colors tracking-tight">
+              {loc.name}
+            </h4>
+          </header>
+
+          <div class="space-y-4 mb-8">
+            <div class="flex items-start gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-brand group-hover:text-blue-200 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <p class="text-slate-600 group-hover:text-blue-50 leading-snug">{loc.address}</p>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-brand group-hover:text-blue-200 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p class="text-slate-600 group-hover:text-blue-50 text-sm">{loc.schedule}</p>
+            </div>
+          </div>
+
+          <a 
+            href={loc.mapLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-white border border-slate-200 text-slate-900 font-bold text-sm hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all group-hover:shadow-xl group-hover:border-transparent"
+          >
+            Cómo llegar
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
